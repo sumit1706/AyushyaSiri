@@ -1,4 +1,5 @@
 **RUNNING THE APPLICATION**
+
 **---------------------------**
 
 Step 1: Installing softwares
