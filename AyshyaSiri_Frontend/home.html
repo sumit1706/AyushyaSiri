@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AyushyaSiri Website</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<header>
+		<nav>
+			<div class="name">
+				<a href=""#>AyushyaSiri</a>
+			</div>
+			<ul>
+				<li><a href="#sec1">Home</a></li>
+				<li><a href="#sec2">Services</a></li>
+				<li><a href="#sec3">About Us</a></li>
+				<li><a href="#sec4">Contact Us</a></li>
+				<li class ="login"><a href="index.html">Logout</a></li>
+			</ul>
+		</nav>
+	</header>
+    <!-- Chat widget code -->
+	
+    <!-- End of chat widget code -->    
+	<section class="home" id = 'sec1'>
+		<h1>Welcome to our Healthcare Website</h1>
+		<p>We are dedicated to providing quality healthcare services to our patients.</p>
+		<a href="#" class="button">Learn More</a>
+	</section>
+	<section class="services" id = 'sec2'>
+		<h2>Our Services</h2>
+		<ul>
+			<li><a href="chat_widget.html">Symptom Checker</a></li>
+			<li><a href="http://localhost:8501/">Disease Prediction System</a></li>
+			<li><a href="doc.html">Schedule Appointment</a></li>
+			<li><a href="medicine.html">Order Medicine</a></li>
+			<li><a href="user.html">User Profile</a></li>
+		</ul>
+	</section>
+	<section class="about" id = 'sec3'>
+		<h2>About Us</h2>
+		<p>We are a team of healthcare professionals who are committed to providing compassionate care to our patients.</p>
+		<a href="#" class="button">Learn More</a>
+	</section>
+	<section class="contact" id = 'sec4'>
+		<h2>Contact Us</h2>
+		<p>Feel free to contact us with any questions or concerns you may have.</p>
+		<form action="#" method="POST">
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" required><br>
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email" required><br>
+			<label for="message">Message:</label>
+			<textarea id="message" name="message" required></textarea><br>
+			<button type="submit">Send</button>
+		  </form>
+	</section>
+	<footer>
+		<p>&copy; AyushyaSiri Healthcare Website</p>
+	</footer>
+     <!-- Add this script to the bottom of the HTML body -->
+    <script>
+        const chatIcon = document.getElementById('chat-icon');
+		const chatWindow = document.getElementById('chat-window');
+
+		chatIcon.addEventListener('click', () => {
+  		chatWindow.style.display = 'block';
+});
+
+    </script>
+</body>
+</html>

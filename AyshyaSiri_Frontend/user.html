@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Profile</title>
+	<link rel="stylesheet" type="text/css" href="css/ustyle.css">
+</head>
+<style>
+  body {
+      background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(ubg.png);
+  }
+</style>
+<body>
+  <header>
+		<nav>
+			<div class="name">
+				<h2>AyushyaSiri</h2>
+			</div>
+      <center><h2>User Profile</h2></center>
+			<ul>
+				<li><a href="home.html">Home</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="profile">
+		<div class="profile-details">
+			<h1 id = "name"></h1>
+			<p id = "address"><strong>Address:</strong></p>
+      <p id = "gender"><strong>Gender:</strong></p>
+      <p id = "dob"><strong>Date of Birth:</strong></p>
+			<p id ="phone"><strong>Phone:</strong></p>
+			<p id = "email"><strong>Email:</strong></p>
+            <h2>Previous Orders</h2>
+            <table id = "table-order">
+                <thead>
+                  <tr>
+                    <th>Order Id</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+              </table>
+              
+			<h2>Previous Appointments</h2>
+			<table id = "table-appointment">
+                <thead>
+                  <tr>
+                    <th>Appointment Id</th>
+                    <th>Date</th>
+                    <th>Doctor Id</th>
+                    <th>Email</th>
+                    <th>Time</th>  
+                  </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+              </table>
+		</div>
+	</div>
+  <footer>
+		<p>&copy; AyushyaSiri Healthcare Website</p>
+	</footer>
+
+  <script>
+
+    // Function to handle the response from the API
+    function handleResponse(response) {
+
+        document.getElementById("name").innerHTML = "Name : " + response.name;
+
+        document.getElementById("address").innerHTML = "Address : " + response.address;
+
+        document.getElementById("gender").innerHTML = "Gender : " + response.gender;
+
+        document.getElementById("dob").innerHTML = "Date of Birth : " + response.dob;
+
+        document.getElementById("phone").innerHTML = "Phone No : " + response.phone;
+
+        document.getElementById("email").innerHTML = "Email-Id : " + response.email;
+
+
+        displayOrdDataInTable(response.previousOrders);
+        displayAppDataInTable(response.previousAppointments);
+        // Process the response here
+        console.log(response);
+    }
+    
+    // Make the GET request
+    fetch('http://localhost:8080/userProfile', {
+    method: 'GET',
+      headers: {
+            'Content-Type': 'application/json'
+      }
+    })
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        handleResponse(data);
+    })
+    .catch(function(error) {
+        console.log('Error:', error);
+    });
+ 
+
+    function displayOrdDataInTable(data) {
+      var ordertable = document.querySelector('#table-order');
+      // Clear any existing table rows
+      //ordertable.innerHTML = '';
+                        
+      // Iterate over the data array
+      data.forEach(function (item) {
+        // Create a new row
+        var row = document.createElement('tr');
+                      
+        // Create cells and populate with data
+        var cell1 = document.createElement('td');
+        cell1.textContent = item.orderId;
+        row.appendChild(cell1);
+
+        var cell2 = document.createElement('td');
+        cell2.textContent = item.date;
+        row.appendChild(cell2);
+
+        var cell3 = document.createElement('td');
+        cell3.textContent = item.time;
+        row.appendChild(cell3);
+
+        var cell4 = document.createElement('td');
+        cell4.textContent = item.name;
+        row.appendChild(cell4);
+                      
+        var cell5 = document.createElement('td');
+        cell5.textContent = item.address;
+        row.appendChild(cell5);
+
+        var cell6 = document.createElement('td');
+        cell6.textContent = item.phone;
+        row.appendChild(cell6);
+
+        var cell7 = document.createElement('td');
+        cell7.textContent = item.email;
+        row.appendChild(cell7);
+                      
+        // Add the row to the table body
+        ordertable.appendChild(row);
+      });
+    } 
+                      
+    function displayAppDataInTable(data) {
+      var appointmenttable = document.querySelector('#table-appointment');
+      // Clear any existing table rows
+      //appointmenttable.innerHTML = '';
+                        
+      // Iterate over the data array
+      data.forEach(function (item) {
+        // Create a new row
+        var row = document.createElement('tr');
+                      
+        // Create cells and populate with data
+        var cell1 = document.createElement('td');
+        cell1.textContent = item.appointmentId;
+        row.appendChild(cell1);
+                        
+        var cell2 = document.createElement('td');
+        cell2.textContent = item.date;
+        row.appendChild(cell2);
+
+        var cell3 = document.createElement('td');
+        cell3.textContent = item.doctorId;
+        row.appendChild(cell3);
+
+        var cell4 = document.createElement('td');
+        cell4.textContent = item.patientEmail;
+        row.appendChild(cell4);
+
+        var cell5 = document.createElement('td');
+        cell5.textContent = item.time;
+        row.appendChild(cell5);
+                        
+        // Add the row to the table body
+        appointmenttable.appendChild(row);
+      });
+    }                  
+  </script>  
+</body>
+</html>

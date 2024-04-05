@@ -1,0 +1,131 @@
+<html>
+<head>
+    <title> Login and Register Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="hero">
+        <div class="form-box">
+            <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" class="toggle-btn" onclick="login()">Login</button>
+                <button type="button" class="toggle-btn" onclick="register()">Register</button>
+            </div>
+            <form id="login" action="http://localhost:8080/loginPatient" method="POST" class="input-group">
+                <input type="text" name="email" class="input-field" placeholder="Email" id="loguser"required><br>
+                <input type="password" name="password" class="input-field" placeholder="*****" id="logpass"required>
+                <input type="checkbox" class="check-box"><span>Remember Password</span>
+                <button type="submit" class="submit-btn" id="btnLogin">Login</button>
+            </form>
+            
+            <form id="register" action="http://localhost:8080/addPatient" class="input-group" method="POST">
+				<input type="text" id="name" class="input-field" placeholder="Name" name="name" required><br>
+                <input type="date" id = "dob" class="input-field" placeholder="Date of Birth" name="dob" required><br>
+                <label for="gender">Gender: </label>
+                <select id="gender" name="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+                </select><br>
+                <input type="email" class="input-field" name="email" placeholder="Email Id"required><br>
+                <input type="password" class="input-field" name="password" placeholder="Password" id="signpass"required><br>
+				<input type="text" id="address" name="address" class="input-field" placeholder="Address" required></textarea><br>
+				<input type="tel" id="phone" name="phone" class="input-field" placeholder="Phone" required><br>
+                <button type="submit" class="submit-btn" id="btnRegister">Register</button>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var loginForm=document.getElementById("login");
+        var registerForm=document.getElementById("register");
+        var button=document.getElementById("btn");
+
+        function register(){
+            loginForm.style.left="-400px";
+            registerForm.style.left="50px";
+            button.style.left="110px";
+        }
+        function login(){
+            loginForm.style.left="50px";
+            registerForm.style.left="450px";
+            button.style.left="0px";
+        }
+
+        registerForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let form = e.currentTarget;
+            let url = form.action;
+
+            try {
+                let formData = new FormData(form);
+                let responseData = await postFormFieldsAsJson({ url, formData });
+                let serverDataResponse = responseData;
+                console.log(serverDataResponse);
+
+                setTimeout(() => console.log(serverDataResponse), 2000);
+                
+                if (serverDataResponse) {
+                   window.alert("Registration Successful!");
+                   window.location.href = "home.html";
+                } 
+                else {
+                    throw new Error("Invalid Data");
+                }
+            } 
+            catch (error) {
+                console.error(error);
+                window.alert("Invalid Data!! Please try again.");
+            }
+        });
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let form = e.currentTarget;
+            let url = form.action;
+
+            try {
+                let formData = new FormData(form);
+                let responseData = await postFormFieldsAsJson({ url, formData });
+                let serverDataResponse = responseData;
+
+                setTimeout(() => console.log(serverDataResponse), 2000);
+                
+                if (serverDataResponse) {
+                   window.alert("Login Successful!");
+                   window.location.href = "home.html";
+                } 
+                else {
+                    throw new Error("Invalid username or password");
+                }
+            } catch (error) {
+                console.error(error);
+                window.alert("Invalid username or password. Please try again.");
+            }
+        });
+
+        async function postFormFieldsAsJson({ url, formData }) {
+            let formDataObject = Object.fromEntries(formData.entries());
+            let formDataJsonString = JSON.stringify(formDataObject);
+            let fetchOptions = {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                },
+                body: formDataJsonString,
+            };
+
+            let res = await fetch(url, fetchOptions);
+            if (!res.ok) {
+                let error = await res.text();
+                throw new Error(error);
+            }
+            return res.json();
+        }
+
+    </script>
+
+</body>
+</html>
