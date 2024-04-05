@@ -1,5 +1,6 @@
 **RUNNING THE APPLICATION**
 **---------------------------**
+
 Step 1: Installing softwares
 	a. Xampp
 	b. STS-4 (IDE) [Spring Tool Suite 4]
